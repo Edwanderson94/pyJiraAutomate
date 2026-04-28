@@ -1,2 +1,4 @@
 desenvolvimento/
 .env
+__pycache__/
+*.pyc
