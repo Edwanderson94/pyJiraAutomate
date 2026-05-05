@@ -1,0 +1,4 @@
+﻿usage: cli.py jira-list-projects [-h]
+
+options:
+  -h, --help  show this help message and exit
