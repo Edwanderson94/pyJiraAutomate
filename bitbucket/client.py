@@ -1,9 +1,5 @@
-import os
-
 import requests
-from dotenv import load_dotenv
-
-load_dotenv()
+from core.secrets import EnvSecretsProvider
 
 BITBUCKET_API_BASE_URL = "https://api.bitbucket.org/2.0"
 
@@ -12,11 +8,9 @@ def get_session():
     """
     Cria e retorna uma sessao autenticada com o Bitbucket.
     """
-    username = os.getenv("BITBUCKET_USERNAME")
-    token = os.getenv("BITBUCKET_APP_PASSWORD")
-
-    if not username or not token:
-        raise RuntimeError("Credenciais do Bitbucket nao encontradas no .env")
+    secrets = EnvSecretsProvider()
+    username = secrets.get("BITBUCKET_USERNAME")
+    token = secrets.get("BITBUCKET_APP_PASSWORD")
 
     session = requests.Session()
     session.auth = (username, token)
