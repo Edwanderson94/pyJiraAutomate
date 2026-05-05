@@ -7,6 +7,7 @@ Automacoes em Python para Jira e Bitbucket Cloud. O projeto nasceu como apoio op
 ### Jira
 
 - abre uma conexao com Jira usando variaveis de ambiente
+- lista projetos do Jira
 
 ### Bitbucket Cloud
 
@@ -33,7 +34,13 @@ Automacoes em Python para Jira e Bitbucket Cloud. O projeto nasceu como apoio op
 ```text
 pyJiraAutomate/
 |-- jira/
-|   `-- client.py
+|   |-- __init__.py
+|   |-- client.py
+|   `-- projects.py
+|-- jira_integration/
+|   |-- __init__.py
+|   |-- client.py
+|   `-- projects.py
 |-- bitbucket/
 |   |-- __init__.py
 |   |-- client.py
@@ -99,6 +106,11 @@ O fluxo principal do Bitbucket esta dividido em camadas:
 
 Quando a aplicacao consulta listas da API, a paginacao e tratada automaticamente.
 
+No Jira, a primeira camada reutilizavel foi isolada em um pacote proprio para evitar conflito com a biblioteca `jira` instalada:
+
+1. [jira_integration/client.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/jira_integration/client.py) para conexao autenticada
+2. [jira_integration/projects.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/jira_integration/projects.py) para listagem de projetos
+
 ## CLI para o consumidor
 
 Agora o projeto possui um ponto de entrada unico em [cli.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/cli.py). Isso deixa a aplicacao mais amigavel para quem consome sem precisar montar scripts Python toda vez.
@@ -115,6 +127,12 @@ Listar projetos:
 
 ```powershell
 .\desenvolvimento\Scripts\python.exe cli.py list-projects
+```
+
+Listar projetos do Jira:
+
+```powershell
+.\desenvolvimento\Scripts\python.exe cli.py jira-list-projects
 ```
 
 Criar projeto:
@@ -258,6 +276,15 @@ create_project(
 )
 ```
 
+Listar projetos do Jira:
+
+```python
+from jira_integration.projects import list_projects
+
+for project in list_projects():
+    print(project["key"], project["name"])
+```
+
 ## Scripts auxiliares
 
 [list_workspace_inventory.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/list_workspace_inventory.py) imprime um inventario do workspace com repositorios e branches.
@@ -298,4 +325,5 @@ Uso sugerido:
 - adicionar testes automatizados para os modulos do Bitbucket
 - padronizar logs e mensagens de erro
 - expandir a parte de Jira alem da conexao basica
+- evoluir Jira com listagem de issue types, criacao de issue e busca por JQL
 - empacotar a aplicacao para distribuicao mais formal

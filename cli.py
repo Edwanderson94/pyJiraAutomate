@@ -11,6 +11,7 @@ from bitbucket.repositories import (
     list_repositories,
 )
 from bitbucket.templates import create_default_template_repositories, create_template_repository
+from jira_integration.projects import list_projects as jira_list_projects
 
 
 def _print_json(payload):
@@ -19,6 +20,10 @@ def _print_json(payload):
 
 def handle_list_projects(_args):
     _print_json(list_projects())
+
+
+def handle_jira_list_projects(_args):
+    _print_json(jira_list_projects())
 
 
 def handle_create_project(args):
@@ -114,6 +119,9 @@ def build_parser():
 
     list_projects_parser = subparsers.add_parser("list-projects", help="Lista projetos do workspace.")
     list_projects_parser.set_defaults(func=handle_list_projects)
+
+    jira_list_projects_parser = subparsers.add_parser("jira-list-projects", help="Lista projetos do Jira.")
+    jira_list_projects_parser.set_defaults(func=handle_jira_list_projects)
 
     create_project_parser = subparsers.add_parser("create-project", help="Cria um projeto.")
     create_project_parser.add_argument("project_key")

@@ -1,0 +1,61 @@
+﻿.\desenvolvimento\Scripts\python.exe : Traceback (most recent call last):
+At line:2 char:1
++ .\desenvolvimento\Scripts\python.exe cli.py jira-list-projects *>&1 | ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Traceback (most recent call last)::String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\cli.py", line 206, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\cli.py", line 202, in main
+    args.func(args)
+    ~~~~~~~~~^^^^^^
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\cli.py", line 26, in handle_jira_list_projects
+    _print_json(jira_list_projects())
+                ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\jira_integration\projects.py", line 5, in list_projects
+    client = get_jira_client()
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\jira_integration\client.py", line 43, in get_jira_client
+    return jira_class(
+        server=jira_url,
+        basic_auth=(jira_email, jira_token),
+    )
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\desenvolvimento\Lib\site-packages\jira\client.py", line 661, in 
+__init__
+    si = self.server_info()
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\desenvolvimento\Lib\site-packages\jira\client.py", line 3835, 
+in server_info
+    j = self._get_json("serverInfo")
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\desenvolvimento\Lib\site-packages\jira\client.py", line 4597, 
+in _get_json
+    else self._session.get(url, params=params)
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\desenvolvimento\Lib\site-packages\requests\sessions.py", line 
+602, in get
+    return self.request("GET", url, **kwargs)
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\desenvolvimento\Lib\site-packages\jira\resilientsession.py", 
+line 247, in request
+    elif raise_on_error(response, **processed_kwargs):
+         ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\usuario\Documents\repo\pyJiraAutomate\desenvolvimento\Lib\site-packages\jira\resilientsession.py", 
+line 72, in raise_on_error
+    raise JIRAError(
+    ...<6 lines>...
+    )
+jira.exceptions.JIRAError: JiraError HTTP 404 url: https://automate-devops.atlassian.net/rest/api/2/serverInfo
+	text: Site temporarily unavailable
+	
+	response headers = {'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 
+'Date': 'Tue, 05 May 2026 02:10:22 GMT', 'Server': 'AtlassianEdge', 'Atl-Missing-Tcs': 'true', 
+'X-Content-Type-Options': 'nosniff', 'X-Xss-Protection': '1; mode=block', 'Atl-Traceid': 
+'24163c23f2a04306b1f812e062c41d84', 'Atl-Request-Id': '24163c23-f2a0-4306-b1f8-12e062c41d84', 
+'Strict-Transport-Security': 'max-age=63072000; includeSubDomains; preload', 'Report-To': '{"endpoints": [{"url": 
+"https://dz8aopenkvv6s.cloudfront.net"}], "group": "endpoint-1", "include_subdomains": true, "max_age": 600}', 'Nel': 
+'{"failure_fraction": 0.01, "include_subdomains": true, "max_age": 600, "report_to": "endpoint-1"}', 'Vary': 
+'Accept-Encoding', 'Content-Encoding': 'gzip', 'Server-Timing': 
+'atl-edge;dur=115,atl-edge-internal;dur=10,atl-edge-upstream;dur=104,atl-edge-pop;desc="aws-us-east-1"', 'X-Cache': 
+'Error from cloudfront', 'Via': '1.1 1021c2f118aa3c392868c6a73edba714.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 
+'GRU3-P13', 'X-Amz-Cf-Id': 'ag9y02ZXdAIDQg-qMt9em1AMt0j98bmgnq_d4WeAMFQw3A2_Ln8O7w=='}
+	response text = {"errorMessage": "Site temporarily unavailable", "errorCode": "OTHER"}

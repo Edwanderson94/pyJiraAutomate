@@ -1,5 +1,6 @@
 import os
 import sys
+from importlib import import_module
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -10,17 +11,23 @@ load_dotenv()
 def _load_jira_class():
     project_root = Path(__file__).resolve().parent.parent
     original_sys_path = sys.path[:]
+    original_jira_module = sys.modules.get("jira")
 
     try:
         sys.path = [
             path for path in sys.path
-            if Path(path).resolve() != project_root
+            if Path(path or ".").resolve() != project_root
         ]
-        from jira import JIRA  # type: ignore
+
+        if "jira" in sys.modules:
+            del sys.modules["jira"]
+
+        jira_module = import_module("jira")
+        return jira_module.JIRA
     finally:
         sys.path = original_sys_path
-
-    return JIRA
+        if original_jira_module is not None:
+            sys.modules["jira"] = original_jira_module
 
 
 def get_jira_client():
