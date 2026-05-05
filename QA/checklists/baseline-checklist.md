@@ -1,6 +1,9 @@
 # Baseline Checklist
 
 - Validar carregamento das variaveis de ambiente.
+- Validar se `.env` esta ignorado pelo Git.
+- Validar se `.env.example` existe e nao contem secrets reais.
+- Validar carregamento dos secrets via `EnvSecretsProvider`.
 - Validar autenticacao com Jira.
 - Validar autenticacao com Bitbucket.
 - Listar repositorios do workspace.

@@ -3,9 +3,7 @@ import sys
 from importlib import import_module
 from pathlib import Path
 
-from dotenv import load_dotenv
-
-load_dotenv()
+from core.secrets import EnvSecretsProvider
 
 
 def _load_jira_class():
@@ -31,12 +29,10 @@ def _load_jira_class():
 
 
 def get_jira_client():
-    jira_url = os.getenv("JIRA_URL")
-    jira_email = os.getenv("JIRA_EMAIL")
-    jira_token = os.getenv("JIRA_TOKEN")
-
-    if not all([jira_url, jira_email, jira_token]):
-        raise ValueError("Variaveis de ambiente do Jira nao foram configuradas corretamente.")
+    secrets = EnvSecretsProvider()
+    jira_url = secrets.get("JIRA_URL")
+    jira_email = secrets.get("JIRA_EMAIL")
+    jira_token = secrets.get("JIRA_TOKEN")
 
     jira_class = _load_jira_class()
 

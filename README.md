@@ -79,7 +79,7 @@ pip install -r requirements.txt
 
 ## Configuracao
 
-Crie um arquivo `.env` na raiz do projeto:
+Crie um arquivo `.env` local a partir do [.env.example](/c:/Users/usuario/Documents/repo/pyJiraAutomate/.env.example):
 
 ```env
 # Jira
@@ -94,22 +94,30 @@ BITBUCKET_USERNAME=seu-email@dominio.com
 BITBUCKET_APP_PASSWORD=seu-app-password
 ```
 
+Regras importantes:
+
+- `.env` e local e nao deve ser commitado
+- `.env.example` e o arquivo versionado para orientar configuracao
+- a leitura de secrets agora passa pela camada [core/secrets.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/core/secrets.py)
+
 ## Como a aplicacao funciona
 
 O fluxo principal do Bitbucket esta dividido em camadas:
 
-1. [bitbucket/client.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/client.py) autentica e encapsula `GET`, `POST`, `PUT`, `DELETE` e paginacao.
-2. [bitbucket/projects.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/projects.py) cuida dos projetos.
-3. [bitbucket/repositories.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/repositories.py) cuida dos repositorios e da inicializacao.
-4. [bitbucket/branches.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/branches.py) cuida da criacao e consulta de branches.
-5. [bitbucket/templates.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/templates.py) agrupa fluxos prontos para repositorios template.
+1. [core/secrets.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/core/secrets.py) centraliza a leitura de secrets via `EnvSecretsProvider`.
+2. [bitbucket/client.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/client.py) autentica e encapsula `GET`, `POST`, `PUT`, `DELETE` e paginacao.
+3. [bitbucket/projects.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/projects.py) cuida dos projetos.
+4. [bitbucket/repositories.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/repositories.py) cuida dos repositorios e da inicializacao.
+5. [bitbucket/branches.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/branches.py) cuida da criacao e consulta de branches.
+6. [bitbucket/templates.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/bitbucket/templates.py) agrupa fluxos prontos para repositorios template.
 
 Quando a aplicacao consulta listas da API, a paginacao e tratada automaticamente.
 
 No Jira, a primeira camada reutilizavel foi isolada em um pacote proprio para evitar conflito com a biblioteca `jira` instalada:
 
-1. [jira_integration/client.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/jira_integration/client.py) para conexao autenticada
-2. [jira_integration/projects.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/jira_integration/projects.py) para listagem de projetos
+1. [core/secrets.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/core/secrets.py) resolve secrets
+2. [jira_integration/client.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/jira_integration/client.py) para conexao autenticada
+3. [jira_integration/projects.py](/c:/Users/usuario/Documents/repo/pyJiraAutomate/jira_integration/projects.py) para listagem de projetos
 
 ## CLI para o consumidor
 
